@@ -1,0 +1,5 @@
+[
+  {
+    "text": "Multi-Language analysis is enabled. If this was not intended, please set \"/d:sonar.scanner.scanAll=false\" in the begin step."
+  }
+]
