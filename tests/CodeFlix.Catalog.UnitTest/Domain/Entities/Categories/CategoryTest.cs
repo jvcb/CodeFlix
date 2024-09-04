@@ -99,7 +99,7 @@ public class CategoryTest
     {
         Action action = () => new Category("Category Name", null!);
 
-        action.Should().Throw<EntityValidationException>().WithMessage("Description should not be empty or null");
+        action.Should().Throw<EntityValidationException>().WithMessage("Description should not be null");
     }
 
     [Theory(DisplayName = nameof(InstantiateErrorWhenNameIsEmpty))]
@@ -154,7 +154,7 @@ public class CategoryTest
 
         Action action = () => new Category("Category Name", invalidLongDescription);
 
-        action.Should().Throw<EntityValidationException>().WithMessage("Description should be less or equal 10_000 characters long");
+        action.Should().Throw<EntityValidationException>().WithMessage("Description should be less or equal 10000 characters long");
     }
 
     [Fact(DisplayName = nameof(Update))]
@@ -243,6 +243,6 @@ public class CategoryTest
 
         Action action = () => category.Update("Category Name", invalidLongDescription);
 
-        action.Should().Throw<EntityValidationException>().WithMessage("Description should be less or equal 10_000 characters long");
+        action.Should().Throw<EntityValidationException>().WithMessage("Description should be less or equal 10000 characters long");
     }
 }
