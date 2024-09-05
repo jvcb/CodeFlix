@@ -1,0 +1,38 @@
+﻿using CodeFlix.Catalog.Application.Interfaces;
+using CodeFlix.Catalog.Application.UseCases.Categories.CreateCategory;
+using CodeFlix.Catalog.Domain.Entities;
+using CodeFlix.Catalog.Domain.Repositories;
+
+namespace CodeFlix.Catalog.Application.UseCases.Categories.CreateCategories;
+
+public class CreateCategoryUseCase : ICreateCategory
+{
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly ICategoryRepository _categoryRepository;
+
+    public CreateCategoryUseCase(
+        ICategoryRepository categoryRepository,
+        IUnitOfWork unitOfWork)
+    {
+        _categoryRepository = categoryRepository;
+        _unitOfWork = unitOfWork;
+    }
+
+    public async Task<CreateCategoryOutput> Handle(CreateCategoryInput input, CancellationToken cancellationToken)
+    {
+        var category = new Category(
+            input.Name,
+            input.Description,
+            input.IsActive);
+
+        await _categoryRepository.Insert(category, cancellationToken);
+        await _unitOfWork.Commit(cancellationToken);
+
+        return new CreateCategoryOutput(
+            category.Id, 
+            category.Name, 
+            category.Description, 
+            category.IsActive, 
+            category.CreatedAt);
+    }
+}

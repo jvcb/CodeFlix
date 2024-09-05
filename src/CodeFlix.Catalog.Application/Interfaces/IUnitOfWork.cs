@@ -1,4 +1,4 @@
-﻿namespace CodeFlix.Catalog.Domain.SeedWork;
+﻿namespace CodeFlix.Catalog.Application.Interfaces;
 
 public interface IUnitOfWork
 {
