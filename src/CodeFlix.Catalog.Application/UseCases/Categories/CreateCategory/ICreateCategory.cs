@@ -1,8 +1,9 @@
 ﻿using CodeFlix.Catalog.Application.UseCases.Categories.CreateCategories;
+using MediatR;
 
 namespace CodeFlix.Catalog.Application.UseCases.Categories.CreateCategory;
 
-public interface ICreateCategory
+public interface ICreateCategory 
+    : IRequestHandler<CreateCategoryInput, CreateCategoryOutput>
 {
-    public Task<CreateCategoryOutput> Handle(CreateCategoryInput input, CancellationToken cancellationToken);
 }

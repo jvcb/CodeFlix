@@ -115,7 +115,10 @@ public class CreateCategoryTest
 
     [Theory(DisplayName = nameof(ThrowWhenCantInstantiateAggregate))]
     [Trait("Application", "CreateCategory - Use Cases")]
-    [MemberData(nameof(GetInvalidInputs))]
+    [MemberData(
+        nameof(CreateCategoryTestDataGenerator.GetInvalidInputs),
+        parameters: 12,
+        MemberType = typeof(CreateCategoryTestDataGenerator))]
     public void ThrowWhenCantInstantiateAggregate(
         CreateCategoryInput input,
         string exceptionMessage)
@@ -131,52 +134,5 @@ public class CreateCategoryTest
 
         action.Should().ThrowAsync<EntityValidationException>()
             .WithMessage(exceptionMessage);
-    }
-
-    public static IEnumerable<object[]> GetInvalidInputs()
-    {
-        var fixture = new CreateCategoryTestFixture();
-
-        var invalidInputList = new List<object[]>();
-
-        var invalidInputShortName = fixture.GetInput();
-        invalidInputShortName.Name.Substring(0, 2);
-
-        invalidInputList.Add(new object[]
-        {
-            invalidInputShortName,
-            "Name should be at least 3 characters long"
-        });
-
-        var invalidInputTooLongName = fixture.GetInput();
-        while (invalidInputTooLongName.Name.Length <= 255)
-            invalidInputTooLongName.Name += fixture.Faker.Commerce.ProductName();
-
-        invalidInputList.Add(new object[]
-        {
-            invalidInputTooLongName,
-            "Name should be less or equal 255 characters long"
-        });
-
-        var invalidInputDescriptionNull = fixture.GetInput();
-        invalidInputDescriptionNull.Description = null!;
-
-        invalidInputList.Add(new object[]
-        {
-            invalidInputDescriptionNull,
-            "Description should not be null"
-        });
-
-        var invalidInputTooLongDescription = fixture.GetInput();
-        while (invalidInputTooLongDescription.Description.Length <= 10_000)
-            invalidInputTooLongDescription.Description += fixture.Faker.Commerce.ProductDescription();
-
-        invalidInputList.Add(new object[]
-        {
-            invalidInputTooLongDescription,
-            "Description should be less or equal 10000 characters long"
-        });
-
-        return invalidInputList;
     }
 }

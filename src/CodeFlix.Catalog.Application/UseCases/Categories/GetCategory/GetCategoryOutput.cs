@@ -1,8 +1,8 @@
 ﻿using CodeFlix.Catalog.Domain.Entities;
 
-namespace CodeFlix.Catalog.Application.UseCases.Categories.CreateCategory;
+namespace CodeFlix.Catalog.Application.UseCases.Categories.GetCategory;
 
-public class CreateCategoryOutput
+public class GetCategoryOutput
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
@@ -10,11 +10,11 @@ public class CreateCategoryOutput
     public bool IsActive { get; set; }
     public DateTime CreatedAt { get; set; }
 
-    public CreateCategoryOutput(
-        Guid id, 
-        string name, 
-        string? description, 
-        bool isActive, 
+    public GetCategoryOutput(
+        Guid id,
+        string name,
+        string? description,
+        bool isActive,
         DateTime createdAt)
     {
         Id = id;
@@ -24,9 +24,9 @@ public class CreateCategoryOutput
         CreatedAt = createdAt;
     }
 
-    public static CreateCategoryOutput FromCategory(Category category)
+    public static GetCategoryOutput FromCategory(Category category)
     {
-        return new CreateCategoryOutput(
+        return new GetCategoryOutput(
             category.Id,
             category.Name,
             category.Description,
