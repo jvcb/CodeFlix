@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CodeFlix.Catalog.Application.UseCases.Categories.Common;
+using MediatR;
 
 namespace CodeFlix.Catalog.Application.UseCases.Categories.GetCategory;
-internal interface IGetCategoryUseCase
+
+public interface IGetCategoryUseCase : IRequestHandler<GetCategoryInput, CategoryModelOutput>
 {
 }

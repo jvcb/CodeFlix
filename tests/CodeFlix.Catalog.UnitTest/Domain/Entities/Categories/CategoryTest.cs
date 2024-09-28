@@ -102,7 +102,7 @@ public class CategoryTest
         action.Should().Throw<EntityValidationException>().WithMessage("Description should not be null");
     }
 
-    [Theory(DisplayName = nameof(InstantiateErrorWhenNameIsEmpty))]
+    [Theory(DisplayName = nameof(InstantiateErrorWhenNameIsLessThan3Characters))]
     [Trait("Domain", "Category - Aggregates")]
     [MemberData(nameof(GetNamesWithLessThan3Characters), parameters: 10)]
     public void InstantiateErrorWhenNameIsLessThan3Characters(string invalidName)

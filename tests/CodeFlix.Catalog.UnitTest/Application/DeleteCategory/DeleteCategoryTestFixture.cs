@@ -1,18 +1,15 @@
-﻿using CodeFlix.Catalog.Domain.Entities;
+﻿using CodeFlix.Catalog.Application.Interfaces;
+using CodeFlix.Catalog.Domain.Entities;
 using CodeFlix.Catalog.Domain.Repositories;
 using CodeFlix.Catalog.UnitTest.Common;
 using Moq;
 
-namespace CodeFlix.Catalog.UnitTest.Application.GetCategories;
+namespace CodeFlix.Catalog.UnitTest.Application.DeleteCategory;
 
-[CollectionDefinition(nameof(GetCategoryTestFixture))]
-public class GetCategoryTestFixtureCollection :
-    ICollectionFixture<GetCategoryTestFixture>
-{ }
-
-public class GetCategoryTestFixture : FixtureBase
+public class DeleteCategoryTestFixture : FixtureBase
 {
     public Mock<ICategoryRepository> GetRepositoryMock() => new();
+    public Mock<IUnitOfWork> GetUnitOfWorkMock() => new();
 
     public string GetValidCategoryName()
     {
@@ -36,3 +33,9 @@ public class GetCategoryTestFixture : FixtureBase
     public Category GetValidCategory()
         => new(GetValidCategoryName(), GetValidCategoryDescription());
 }
+
+[CollectionDefinition(nameof(DeleteCategoryTestFixture))]
+public class DeleteCategoryTestFixtureCollection
+    : ICollectionFixture<DeleteCategoryTestFixture>
+{ }
+
