@@ -6,6 +6,6 @@ public class UpdateCategoryInputValidator : AbstractValidator<UpdateCategoryInpu
 {
     public UpdateCategoryInputValidator()
     {
-        
+        RuleFor(x => x.Id).NotEmpty();
     }
 }

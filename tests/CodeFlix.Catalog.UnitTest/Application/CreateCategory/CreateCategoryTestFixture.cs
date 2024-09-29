@@ -1,5 +1,5 @@
 ﻿using CodeFlix.Catalog.Application.Interfaces;
-using CodeFlix.Catalog.Application.UseCases.Categories.CreateCategories;
+using CodeFlix.Catalog.Application.UseCases.Categories.CreateCategory;
 using CodeFlix.Catalog.Domain.Repositories;
 using CodeFlix.Catalog.UnitTest.Common;
 using Moq;

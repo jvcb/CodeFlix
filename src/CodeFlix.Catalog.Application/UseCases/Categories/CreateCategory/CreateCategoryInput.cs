@@ -1,7 +1,7 @@
 ﻿using CodeFlix.Catalog.Application.UseCases.Categories.Common;
 using MediatR;
 
-namespace CodeFlix.Catalog.Application.UseCases.Categories.CreateCategories;
+namespace CodeFlix.Catalog.Application.UseCases.Categories.CreateCategory;
 
 public class CreateCategoryInput : IRequest<CategoryModelOutput>
 {

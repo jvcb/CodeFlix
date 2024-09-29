@@ -1,12 +1,12 @@
 ﻿using Bogus;
-using CodeFlix.Catalog.Application.UseCases.Categories.CreateCategories;
+using CodeFlix.Catalog.Application.UseCases.Categories.CreateCategory;
 using CodeFlix.Catalog.Domain.Entities;
 using CodeFlix.Catalog.Domain.Exceptions;
 using CodeFlix.Catalog.UnitTest.Application.CreateCategory;
 using FluentAssertions;
 using Moq;
 
-namespace CodeFlix.Catalog.UnitTest.Application.CreateCategories;
+namespace CodeFlix.Catalog.UnitTest.Application.CreateCategory;
 
 
 [Collection(nameof(CreateCategoryTestFixture))]

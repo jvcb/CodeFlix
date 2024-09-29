@@ -1,10 +1,9 @@
 ﻿using CodeFlix.Catalog.Application.Interfaces;
 using CodeFlix.Catalog.Application.UseCases.Categories.Common;
-using CodeFlix.Catalog.Application.UseCases.Categories.CreateCategory;
 using CodeFlix.Catalog.Domain.Entities;
 using CodeFlix.Catalog.Domain.Repositories;
 
-namespace CodeFlix.Catalog.Application.UseCases.Categories.CreateCategories;
+namespace CodeFlix.Catalog.Application.UseCases.Categories.CreateCategory;
 
 public class CreateCategoryUseCase : ICreateCategory
 {

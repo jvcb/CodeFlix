@@ -23,9 +23,10 @@ public class UpdateCategoryUseCase : IUpdateCategory
 
         category.Update(request.Name, request.Description);
         
-        if (request.IsActive != category.IsActive)
-            if (request.IsActive) category.Activate();
-            else category.Deactivate();
+        if (request.IsActive is not null && 
+            request.IsActive != category.IsActive)
+                if ((bool)request.IsActive!) category.Activate();
+                else category.Deactivate();
 
         await _categoryRepository.Update(category, cancellationToken);
         await _unitOfWork.Commit(cancellationToken);

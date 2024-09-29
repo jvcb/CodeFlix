@@ -45,6 +45,39 @@ public class UpdateCategoryTestFixture : FixtureBase
                 GetValidCategoryName(),
                 GetValidCategoryDescription(),
                 GetRandomBoolean());
+
+    public UpdateCategoryInput GetInvalidInputShortName()
+    {
+        var invalidInputShortName = GetValidInput();
+        invalidInputShortName.Name = 
+            invalidInputShortName.Name.Substring(0, 2);
+
+        return invalidInputShortName;
+    }
+
+
+    public UpdateCategoryInput GetInvalidInputTooLongName()
+    {
+        var invalidInputTooLongName = GetValidInput();
+        while (invalidInputTooLongName.Name.Length <= 255)
+            invalidInputTooLongName.Name += Faker.Commerce.ProductName();
+        invalidInputTooLongName.Name += Faker.Commerce.ProductName();
+
+        return invalidInputTooLongName;
+    }
+
+    public UpdateCategoryInput GetInvalidInputTooLongDescription()
+    {
+        var invalidInputTooLongDescription = GetValidInput();
+        var tooLongDescriptionForCategory = Faker.Commerce.ProductDescription();
+
+        while (tooLongDescriptionForCategory.Length <= 10_000)
+            tooLongDescriptionForCategory += Faker.Commerce.ProductDescription();
+
+        invalidInputTooLongDescription.Description = tooLongDescriptionForCategory;
+
+        return invalidInputTooLongDescription;
+    }
 }
 
 [CollectionDefinition(nameof(UpdateCategoryTestFixture))]
