@@ -2,11 +2,10 @@
 using CodeFlix.Catalog.Application.UseCases.Categories.CreateCategory;
 using CodeFlix.Catalog.Domain.Entities;
 using CodeFlix.Catalog.Domain.Exceptions;
-using CodeFlix.Catalog.UnitTest.Application.CreateCategory;
 using FluentAssertions;
 using Moq;
 
-namespace CodeFlix.Catalog.UnitTest.Application.CreateCategory;
+namespace CodeFlix.Catalog.UnitTest.Application.Categories.CreateCategory;
 
 
 [Collection(nameof(CreateCategoryTestFixture))]
@@ -25,7 +24,7 @@ public class CreateCategoryTest
         var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
 
         var useCase = new CreateCategoryUseCase(
-            repositoryMock.Object, 
+            repositoryMock.Object,
             unitOfWorkMock.Object);
 
         var input = _fixture.GetInput();
@@ -33,11 +32,11 @@ public class CreateCategoryTest
         var output = await useCase.Handle(input, CancellationToken.None);
 
         repositoryMock.Verify(
-            repository => repository.Insert(It.IsAny<Category>(), It.IsAny<CancellationToken>()), 
+            repository => repository.Insert(It.IsAny<Category>(), It.IsAny<CancellationToken>()),
             Times.Once);
 
         unitOfWorkMock.Verify(
-            uow => uow.Commit(It.IsAny<CancellationToken>()), 
+            uow => uow.Commit(It.IsAny<CancellationToken>()),
             Times.Once);
 
         output.Should().NotBeNull();
@@ -45,7 +44,7 @@ public class CreateCategoryTest
         output.Description.Should().Be(input.Description);
         output.IsActive.Should().Be(input.IsActive);
         output.Should().NotBeEquivalentTo(Guid.Empty);
-        output.CreatedAt.Should().NotBeSameDateAs(default(DateTime));
+        output.CreatedAt.Should().NotBeSameDateAs(default);
     }
 
     [Fact(DisplayName = nameof(CreateCategoryWithOnlyName))]
@@ -77,7 +76,7 @@ public class CreateCategoryTest
         output.Description.Should().Be("");
         output.IsActive.Should().BeTrue();
         output.Should().NotBeEquivalentTo(Guid.Empty);
-        output.CreatedAt.Should().NotBeSameDateAs(default(DateTime));
+        output.CreatedAt.Should().NotBeSameDateAs(default);
     }
 
     [Fact(DisplayName = nameof(CreateCategoryWithOnlyNameAndDescription))]
@@ -110,7 +109,7 @@ public class CreateCategoryTest
         output.Description.Should().Be(input.Description);
         output.IsActive.Should().BeTrue();
         output.Should().NotBeEquivalentTo(Guid.Empty);
-        output.CreatedAt.Should().NotBeSameDateAs(default(DateTime));
+        output.CreatedAt.Should().NotBeSameDateAs(default);
     }
 
     [Theory(DisplayName = nameof(ThrowWhenCantInstantiateAggregate))]

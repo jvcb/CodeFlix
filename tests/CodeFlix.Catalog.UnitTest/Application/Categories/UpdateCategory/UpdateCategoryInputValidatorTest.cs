@@ -1,7 +1,7 @@
 ﻿using CodeFlix.Catalog.Application.UseCases.Categories.UpdateCategory;
 using FluentAssertions;
 
-namespace CodeFlix.Catalog.UnitTest.Application.UpdateCategory;
+namespace CodeFlix.Catalog.UnitTest.Application.Categories.UpdateCategory;
 
 [Collection(nameof(UpdateCategoryTestFixture))]
 public class UpdateCategoryInputValidatorTest

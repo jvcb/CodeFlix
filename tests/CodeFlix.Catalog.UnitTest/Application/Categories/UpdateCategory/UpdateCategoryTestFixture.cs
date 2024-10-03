@@ -2,46 +2,17 @@
 using CodeFlix.Catalog.Application.UseCases.Categories.UpdateCategory;
 using CodeFlix.Catalog.Domain.Entities;
 using CodeFlix.Catalog.Domain.Repositories;
+using CodeFlix.Catalog.UnitTest.Application.Categories.Common;
 using CodeFlix.Catalog.UnitTest.Common;
 using Moq;
 
-namespace CodeFlix.Catalog.UnitTest.Application.UpdateCategory;
+namespace CodeFlix.Catalog.UnitTest.Application.Categories.UpdateCategory;
 
 
-public class UpdateCategoryTestFixture : FixtureBase
+public class UpdateCategoryTestFixture : CategoryUseCaseFixtureBase
 {
-    public Mock<ICategoryRepository> GetRepositoryMock() => new();
-    public Mock<IUnitOfWork> GetUnitOfWorkMock() => new();
-
-    public string GetValidCategoryName()
-    {
-        var categoryName = String.Empty;
-
-        while (categoryName.Length < 3) categoryName = Faker.Commerce.Categories(1)[0];
-        if (categoryName.Length > 255) categoryName = categoryName[..255];
-
-        return categoryName;
-    }
-
-    public string GetValidCategoryDescription()
-    {
-        var categoryDescription = Faker.Commerce.ProductDescription();
-
-        if (categoryDescription.Length > 10_000) categoryDescription = categoryDescription[..10_000];
-
-        return categoryDescription;
-    }
-
-    public bool GetRandomBoolean() => (new Random()).NextDouble() < 0.5;
-
-    public Category GetExampleCategory()
-        => new(
-            GetValidCategoryName(),
-            GetValidCategoryDescription(),
-            GetRandomBoolean());
-
     public UpdateCategoryInput GetValidInput(Guid? id = null)
-        => new (id ?? Guid.NewGuid(),
+        => new(id ?? Guid.NewGuid(),
                 GetValidCategoryName(),
                 GetValidCategoryDescription(),
                 GetRandomBoolean());
@@ -49,7 +20,7 @@ public class UpdateCategoryTestFixture : FixtureBase
     public UpdateCategoryInput GetInvalidInputShortName()
     {
         var invalidInputShortName = GetValidInput();
-        invalidInputShortName.Name = 
+        invalidInputShortName.Name =
             invalidInputShortName.Name.Substring(0, 2);
 
         return invalidInputShortName;

@@ -1,7 +1,8 @@
 ﻿using CodeFlix.Catalog.Application.UseCases.Categories.UpdateCategory;
 using CodeFlix.Catalog.UnitTest.Application.CreateCategory;
+using CodeFlix.Catalog.UnitTest.Application.UpdateCategory;
 
-namespace CodeFlix.Catalog.UnitTest.Application.UpdateCategory;
+namespace CodeFlix.Catalog.UnitTest.Application.Categories.UpdateCategory;
 
 public static class UpdateCategoryTestDataGenerator
 {
@@ -15,8 +16,8 @@ public static class UpdateCategoryTestDataGenerator
 
             var exampleInput = fixture.GetValidInput(exampleCategory.Id);
 
-            yield return new object[] { 
-                exampleCategory, 
+            yield return new object[] {
+                exampleCategory,
                 exampleInput };
         }
     }

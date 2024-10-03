@@ -1,7 +1,7 @@
 ﻿using CodeFlix.Catalog.Application.UseCases.Categories.GetCategory;
 using FluentAssertions;
 
-namespace CodeFlix.Catalog.UnitTest.Application.GetCategory;
+namespace CodeFlix.Catalog.UnitTest.Application.Categories.GetCategory;
 
 [Collection(nameof(GetCategoryTestFixture))]
 public class GetCategoryInputValidatorTest

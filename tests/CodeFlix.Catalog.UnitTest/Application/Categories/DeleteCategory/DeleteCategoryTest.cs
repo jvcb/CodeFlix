@@ -3,7 +3,7 @@ using CodeFlix.Catalog.Application.UseCases.Categories.DeleteCategory;
 using FluentAssertions;
 using Moq;
 
-namespace CodeFlix.Catalog.UnitTest.Application.DeleteCategory;
+namespace CodeFlix.Catalog.UnitTest.Application.Categories.DeleteCategory;
 
 
 [Collection(nameof(DeleteCategoryTestFixture))]
@@ -20,7 +20,7 @@ public class DeleteCategoryTest
     {
         var repositoryMock = _fixture.GetRepositoryMock();
         var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
-        var categoryExample = _fixture.GetValidCategory();
+        var categoryExample = _fixture.GetExampleCategory();
 
         repositoryMock.Setup(x => x.Get(categoryExample.Id, It.IsAny<CancellationToken>()))
             .ReturnsAsync(categoryExample);
@@ -28,7 +28,7 @@ public class DeleteCategoryTest
         var input = new DeleteCategoryInput(categoryExample.Id);
 
         var useCase = new DeleteCategoryUseCase(
-            repositoryMock.Object, 
+            repositoryMock.Object,
             unitOfWorkMock.Object);
 
         await useCase.Handle(input, CancellationToken.None);

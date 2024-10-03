@@ -6,13 +6,13 @@ using CodeFlix.Catalog.Domain.Exceptions;
 using FluentAssertions;
 using Moq;
 
-namespace CodeFlix.Catalog.UnitTest.Application.UpdateCategory;
+namespace CodeFlix.Catalog.UnitTest.Application.Categories.UpdateCategory;
 
 [Collection(nameof(UpdateCategoryTestFixture))]
 public class UpdateCategoryTest
 {
     private readonly UpdateCategoryTestFixture _fixture;
-    
+
     public UpdateCategoryTest(UpdateCategoryTestFixture fixture)
         => _fixture = fixture;
 
@@ -29,7 +29,7 @@ public class UpdateCategoryTest
 
         repositoryMock.Setup(x => x.Get(exampleCategory.Id, It.IsAny<CancellationToken>()))
             .ReturnsAsync(exampleCategory);
-        
+
         var useCase = new UpdateCategoryUseCase(
             repositoryMock.Object,
             unitOfWorkMock.Object
@@ -78,7 +78,7 @@ public class UpdateCategoryTest
     MemberType = typeof(UpdateCategoryTestDataGenerator))]
     [Trait("Application", "UpdateCategory - UseCases")]
     public async Task UpdateCategoryWithoutProvidingIsActive(
-        Category exampleCategory, 
+        Category exampleCategory,
         UpdateCategoryInput exampleInput)
     {
         var repositoryMock = _fixture.GetRepositoryMock();

@@ -3,7 +3,7 @@ using CodeFlix.Catalog.Application.UseCases.Categories.GetCategory;
 using FluentAssertions;
 using Moq;
 
-namespace CodeFlix.Catalog.UnitTest.Application.GetCategory;
+namespace CodeFlix.Catalog.UnitTest.Application.Categories.GetCategory;
 
 [Collection(nameof(GetCategoryTestFixture))]
 public class GetCategoryTest
@@ -18,10 +18,10 @@ public class GetCategoryTest
     public async Task GetCategory()
     {
         var repositoryMock = _fixture.GetRepositoryMock();
-        var exampleCategory = _fixture.GetValidCategory();
+        var exampleCategory = _fixture.GetExampleCategory();
 
         repositoryMock.Setup(x => x.Get(
-            It.IsAny<Guid>(), 
+            It.IsAny<Guid>(),
             It.IsAny<CancellationToken>()
         )).ReturnsAsync(exampleCategory);
 
@@ -37,7 +37,7 @@ public class GetCategoryTest
         output.Description.Should().Be(exampleCategory.Description);
         output.IsActive.Should().Be(exampleCategory.IsActive);
         output.Id.Should().NotBeEmpty();
-        output.CreatedAt.Should().NotBeSameDateAs(default(DateTime));
+        output.CreatedAt.Should().NotBeSameDateAs(default);
     }
 
     [Fact(DisplayName = nameof(NotFoundExceptionWhenCategoryDoesntExist))]
