@@ -1,5 +1,4 @@
 ﻿using CodeFlix.Catalog.Application.UseCases.Categories.ListCategogies;
-using CodeFlix.Catalog.UnitTest.Application.ListCategories;
 
 namespace CodeFlix.Catalog.UnitTest.Application.Categories.ListCategories;
 

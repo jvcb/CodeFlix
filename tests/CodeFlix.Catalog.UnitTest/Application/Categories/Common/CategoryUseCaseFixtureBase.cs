@@ -12,7 +12,7 @@ public abstract class CategoryUseCaseFixtureBase : FixtureBase
     public Mock<IUnitOfWork> GetUnitOfWorkMock() => new();
 
     public Category GetExampleCategory()
-    => new(GetValidCategoryName(), GetValidCategoryDescription(), GetRandomBoolean());
+        => new(GetValidCategoryName(), GetValidCategoryDescription(), GetRandomBoolean());
 
     public string GetValidCategoryName()
     {
