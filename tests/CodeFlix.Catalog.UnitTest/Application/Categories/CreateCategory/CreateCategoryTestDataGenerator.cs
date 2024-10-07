@@ -1,6 +1,4 @@
-﻿using CodeFlix.Catalog.UnitTest.Application.CreateCategory;
-
-namespace CodeFlix.Catalog.UnitTest.Application.Categories.CreateCategory;
+﻿namespace CodeFlix.Catalog.UnitTest.Application.Categories.CreateCategory;
 
 public static class CreateCategoryTestDataGenerator
 {

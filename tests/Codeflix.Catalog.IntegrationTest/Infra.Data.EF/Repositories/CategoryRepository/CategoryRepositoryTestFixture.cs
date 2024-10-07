@@ -1,5 +1,6 @@
 ﻿using Codeflix.Catalog.IntegrationTest.Common;
 using CodeFlix.Catalog.Domain.Entities;
+using CodeFlix.Catalog.Domain.SeedWork.SearchableRepository;
 using CodeFlix.Infra.Data.EF;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,11 +8,18 @@ namespace Codeflix.Catalog.IntegrationTest.Infra.Data.EF.Repositories.CategoryRe
 
 public class CategoryRepositoryTestFixture : FixtureBase
 {
-    public CodeFlixCatalogDbContext CreateDbContext()
-        => new CodeFlixCatalogDbContext(
+    public CodeFlixCatalogDbContext CreateDbContext(bool preserveData = false)
+    {
+        var context = new CodeFlixCatalogDbContext(
             new DbContextOptionsBuilder<CodeFlixCatalogDbContext>()
                 .UseInMemoryDatabase("integration-tests-db")
                     .Options);
+
+        if (!preserveData)
+            context.Database.EnsureDeleted();
+
+        return context;
+    }
 
     public Category GetExampleCategory()
         => new(GetValidCategoryName(), GetValidCategoryDescription(), GetRandomBoolean());
@@ -19,6 +27,27 @@ public class CategoryRepositoryTestFixture : FixtureBase
 
     public List<Category> GetExampleCategoriesList(int length = 10)
         => Enumerable.Range(1, length).Select(_ => GetExampleCategory()).ToList();
+
+    public List<Category> GetExampleCategoriesListWithNames(List<string> names)
+        => names.Select(name =>
+        {
+            var category = GetExampleCategory();
+            category.Update(name);
+            return category;
+        }).ToList();
+
+    public List<Category> CloneCategoriesListOrdered(List<Category> categoriesList, string orderBy, SearchOrder searchOrder)
+    {
+        var listClone = new List<Category>(categoriesList);
+        var orderedEnumerable = (orderBy, searchOrder) switch
+        {
+            ("name", SearchOrder.Asc) => listClone.OrderBy(x => x.Name),
+            ("name", SearchOrder.Desc) => listClone.OrderByDescending(x => x.Name),
+            _ => listClone.OrderBy(x => x.Name),
+        };
+
+        return orderedEnumerable.ToList();
+    }
 
     public string GetValidCategoryName()
     {

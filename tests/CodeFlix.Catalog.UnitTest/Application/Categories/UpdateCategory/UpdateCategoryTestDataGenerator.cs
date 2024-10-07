@@ -1,8 +1,4 @@
-﻿using CodeFlix.Catalog.Application.UseCases.Categories.UpdateCategory;
-using CodeFlix.Catalog.UnitTest.Application.CreateCategory;
-using CodeFlix.Catalog.UnitTest.Application.UpdateCategory;
-
-namespace CodeFlix.Catalog.UnitTest.Application.Categories.UpdateCategory;
+﻿namespace CodeFlix.Catalog.UnitTest.Application.Categories.UpdateCategory;
 
 public static class UpdateCategoryTestDataGenerator
 {
