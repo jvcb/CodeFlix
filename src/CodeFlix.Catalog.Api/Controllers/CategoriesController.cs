@@ -1,0 +1,94 @@
+using CodeFlix.Catalog.Application.UseCases.Categories.Common;
+using CodeFlix.Catalog.Application.UseCases.Categories.CreateCategory;
+using CodeFlix.Catalog.Application.UseCases.Categories.DeleteCategory;
+using CodeFlix.Catalog.Application.UseCases.Categories.GetCategory;
+using CodeFlix.Catalog.Application.UseCases.Categories.ListCategogies;
+using CodeFlix.Catalog.Application.UseCases.Categories.UpdateCategory;
+using CodeFlix.Catalog.Domain.SeedWork.SearchableRepository;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+
+namespace CodeFlix.Catalog.Api.Controllers;
+
+[ApiController]
+[Route("[controller]")]
+public class CategoriesController : ControllerBase
+{
+    private readonly IMediator _mediator;
+
+    public CategoriesController(IMediator mediator)
+        => _mediator = mediator;
+
+    [HttpPost]
+    [ProducesResponseType(typeof(CategoryModelOutput), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    public async Task<IActionResult> Create(
+        [FromBody] CreateCategoryInput input,
+        CancellationToken cancellationToken)
+    {
+        var output = await _mediator.Send(input, cancellationToken);
+        return CreatedAtAction(
+            nameof(GetById),
+            new { id = output.Id },
+            output);
+    }
+
+    [HttpGet("{id:guid}")]
+    [ProducesResponseType(typeof(CategoryModelOutput), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetById(
+        [FromRoute] Guid id,
+        CancellationToken cancellationToken)
+    {
+        var output = await _mediator.Send(new GetCategoryInput(id), cancellationToken);
+        return Ok(output);
+    }
+
+    [HttpPut("{id:guid}")]
+    [ProducesResponseType(typeof(CategoryModelOutput), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    public async Task<IActionResult> Update(
+        [FromRoute] Guid id,
+        [FromBody] UpdateCategoryInput input,
+        CancellationToken cancellationToken)
+    {
+        var output = await _mediator.Send(
+            new UpdateCategoryInput(id, input.Name, input.Description, input.IsActive),
+            cancellationToken);
+        return Ok(output);
+    }
+
+    [HttpDelete("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Delete(
+        [FromRoute] Guid id,
+        CancellationToken cancellationToken)
+    {
+        await _mediator.Send(new DeleteCategoryInput(id), cancellationToken);
+        return NoContent();
+    }
+
+    [HttpGet]
+    [ProducesResponseType(typeof(ListCategoriesOutput), StatusCodes.Status200OK)]
+    public async Task<IActionResult> List(
+        CancellationToken cancellationToken,
+        [FromQuery] int? page = null,
+        [FromQuery(Name = "per_page")] int? perPage = null,
+        [FromQuery] string? search = null,
+        [FromQuery] string? sort = null,
+        [FromQuery] SearchOrder? dir = null)
+    {
+        var input = new ListCategoriesInput(
+            page ?? 1,
+            perPage ?? 15,
+            search ?? "",
+            sort ?? "",
+            dir ?? SearchOrder.Asc);
+        var output = await _mediator.Send(input, cancellationToken);
+        return Ok(output);
+    }
+}
